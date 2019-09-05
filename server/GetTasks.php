@@ -6,7 +6,7 @@ if ($conn->connect_error) {
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
-    $sql = "SELECT id, hash, start_time, end_time FROM tasks WHERE id = $id";
+    $sql = "SELECT id, hash, start_time, end_time FROM tasks WHERE id = '$id'";
 } else {
     $sql = "SELECT id, hash, start_time, end_time FROM tasks";
 }

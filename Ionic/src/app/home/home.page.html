@@ -12,11 +12,14 @@
         <ion-card-header>
             <ion-card-subtitle class="subheader-log">{{task.id}}</ion-card-subtitle>
             <ion-card-title class="header-log">
-                <ion-label>Start</ion-label>
-                {{task.start_time}}
-                -
-                <ion-label>End</ion-label>
-                {{task.end_time}}
+                <ion-label>Date: </ion-label>
+                {{this.moment(task.start_time).format('LL')}}:
+                <br/>
+                <ion-label>Start: </ion-label>
+                {{this.moment(task.start_time).format('LTS')}}
+                <br/>
+                <ion-label>End: </ion-label>
+                {{this.moment(task.end_time).format('LTS')}}
             </ion-card-title>
         </ion-card-header>
     </ion-card>

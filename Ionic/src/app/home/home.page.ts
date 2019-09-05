@@ -21,6 +21,7 @@ export class HomePage implements OnInit {
       protected activatedRoute: ActivatedRoute,
       @Inject(MomentService) public moment,
   ) {
+      this.moment.locale('nl');
   }
 
   ngOnInit() {
