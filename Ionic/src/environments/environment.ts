@@ -6,6 +6,9 @@ export const environment = {
   production: false
 };
 
+export const API_ENDPOINT = 'http://157.245.69.229:8000';
+export const API_TIMEOUT = 5000;
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
