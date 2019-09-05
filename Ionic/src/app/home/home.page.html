@@ -1,6 +1,6 @@
 <ion-content>
     <div class="hero">
-        <time>00:00:00</time>
+        <time>{{time}}</time>
         <div class="hero-button">
             <ion-button color="warning">Pause</ion-button>
             <ion-button (click)="startOrStop()"
@@ -8,12 +8,12 @@
                 {{isStarted ? 'Stop' : 'Start'}}</ion-button>
         </div>
     </div>
-    <ion-card *ngFor="let task of tasks">
+    <ion-card *ngFor="let task of historyTasks">
         <ion-card-header>
             <ion-card-subtitle class="subheader-log">{{task.id}}</ion-card-subtitle>
             <ion-card-title class="header-log">
                 <ion-label>Date: </ion-label>
-                {{this.moment(task.start_time).format('LL')}}:
+                {{this.moment(task.start_time).format('LL')}}
                 <br/>
                 <ion-label>Start: </ion-label>
                 {{this.moment(task.start_time).format('LTS')}}
