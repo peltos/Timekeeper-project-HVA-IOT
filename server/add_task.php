@@ -1,4 +1,6 @@
 <?php
+header("Access-Control-Allow-Origin: *");
+
 $db_handle = new mysqli('localhost', 'root', 'test123', 'tasks');
 if (mysqli_connect_errno()) {
     die("MySQL connection failed: " . mysqli_connect_error());

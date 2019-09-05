@@ -13,6 +13,11 @@ if (isset($_GET['id'])) {
     $sql = "SELECT id, hash, start_time, end_time FROM tasks";
 }
 
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+    $sql = "SELECT id, hash, start_time, end_time FROM tasks WHERE id = '$id'";
+}
+
 $result = $conn->query($sql);
 
 $dbdata = array();
