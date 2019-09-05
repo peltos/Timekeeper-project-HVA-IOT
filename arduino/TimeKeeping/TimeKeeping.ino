@@ -1,3 +1,4 @@
+  
 #include <Servo.h>
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
@@ -21,7 +22,7 @@ int oscillationDuration = MAX_OSCILLATION_DURATION;
 String chipID;
 String serverURL = SERVER_URL;
 long currentMillis = 0;
-String tap = "start";
+String tap = "end";
 LedMatrix ledMatrix = LedMatrix(1, MATRIX_CS_PIN);
 long int hash;
 
@@ -40,8 +41,15 @@ void connectToDefault() {
     delay(500);
     Serial.print(".");
     timer += 500;
-    if (timer > 10000)
+    hideColor();
+    strip.setPixelColor(0, 100, 100, 0);
+    strip.show();
+    if (timer > 10000){
+      hideColor();
+      strip.setPixelColor(0, 100, 0, 0);
+      strip.show();
       break;
+    }
   }
 
   if (WiFi.status() == WL_CONNECTED) {
@@ -50,6 +58,17 @@ void connectToDefault() {
     Serial.println("IP address: ");
     Serial.println(WiFi.localIP());
   }
+}
+
+String generateChipID()
+{
+  String chipIDString = String(ESP.getChipId() & 0xffff, HEX);
+
+  chipIDString.toUpperCase();
+  while (chipIDString.length() < 4)
+    chipIDString = String("0") + chipIDString;
+
+  return chipIDString;
 }
 
 void setup()
@@ -101,6 +120,7 @@ void setup()
   http.begin(serverURL);
   uint16_t httpCode = http.GET();
   http.end();
+  strip.show();
 }
 
 //This method starts an oscillation movement in both the LED and servo
@@ -147,42 +167,59 @@ void oscillate(float springConstant, float dampConstant, int color)
   fadeMatrix(ledMatrix);
 }
 
-void loop()
-{
-  //Check for button press
-  if (digitalRead(BUTTON_PIN) == LOW)
-  {
-    sendButtonPress();
-    delay(500);
+void sendHttp(String tapState){
+  HTTPClient http;
+  Serial.println(serverURL + "add_task.php?id=" + chipID + "&hash=" + hash + "&tap=" + tapState);
+  http.begin(serverURL + "add_task.php?id=" + chipID + "&hash=" + hash + "&tap=" + tapState);
+  uint16_t httpCode = http.GET();
+  http.end();
   }
-}
 
 void sendButtonPress()
 {
   printDebugMessage("Sending button press to server");
-  HTTPClient http;
-  if (tap == "start") {
+  if (tap == "end") {
      hash = time(NULL);
   }
-  Serial.println(serverURL + "add_task.php?id=" + chipID + "&hash=" + hash + "&tap=" + tap);
-  http.begin(serverURL + "add_task.php?id=" + chipID + "&hash=" + hash + "&tap=" + tap);
   if (tap == "start") {
+    setAllPixels(0,0,139, 1.0);
     tap = "end";
+    Serial.println("Done");
+  } else if (tap == "pause") {
+     setAllPixels(210, 0, 0, 1.0);
+    tap = "endPause";
+    Serial.println("Active");
   } else {
+    setAllPixels(210, 0, 0, 1.0);
     tap = "start";
-  }
-  uint16_t httpCode = http.GET();
-  http.end();
+    Serial.println("Active");
+    }
+    sendHttp(tap);
+  if (tap == "endPause"){
+      tap = "start";
+    }
+}
+void sendLongPress(){
+  if (tap == "start"){
+    tap = "pause";
+    setAllPixels(210, 90, 0, 1.0);
+    Serial.println("Pause");
+    sendHttp(tap);
+    }
 }
 
-String generateChipID()
+void loop()
 {
-  String chipIDString = String(ESP.getChipId() & 0xffff, HEX);
-
-  chipIDString.toUpperCase();
-  while (chipIDString.length() < 4)
-    chipIDString = String("0") + chipIDString;
-
-  return chipIDString;
+  if (digitalRead(BUTTON_PIN) == LOW){
+    delay(300);
+    if (digitalRead(BUTTON_PIN) == LOW){
+      Serial.println("Long press");
+      sendLongPress();
+      delay(700);
+    }else{
+      Serial.println("Short press");
+      sendButtonPress();
+      delay(500);
+    }
+  }
 }
-
