@@ -2,4 +2,9 @@ ion-card-content {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  ion-input {
+    border: 1px solid var(--ion-color-medium);
+    border-radius: 3px;
+  }
 }
