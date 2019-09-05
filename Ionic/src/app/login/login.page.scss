@@ -1,10 +1,19 @@
+ion-content {
+  --ion-background-color: #f7fffc;
+}
+
 ion-card-content {
   display: flex;
   justify-content: center;
   align-items: center;
+  background: #fff;
 
   ion-input {
     border: 1px solid var(--ion-color-medium);
     border-radius: 3px;
   }
+}
+
+form {
+  text-align: center;
 }

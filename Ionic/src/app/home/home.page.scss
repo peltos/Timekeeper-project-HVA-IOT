@@ -1,5 +1,5 @@
-ion-grid {
-  width: 100%;
+ion-content {
+  --ion-background-color: #f7fffc;
 }
 
 .hero {
@@ -24,6 +24,10 @@ ion-grid {
     bottom: 10px;
     right: 10px;
   }
+}
+
+ion-card {
+  background: #fff;
 }
 
 .subheader-log {
