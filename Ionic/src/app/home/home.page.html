@@ -3,27 +3,27 @@
         <time>{{time}}</time>
         <div class="hero-button">
             <ion-button color="warning">Pause</ion-button>
-            <ion-button (click)="startOrStop()"
+            <ion-button (click)="changeState()"
                         [color]="isStarted? 'danger' : 'success'">
                 {{isStarted ? 'Stop' : 'Start'}}</ion-button>
         </div>
     </div>
-    <ion-card *ngFor="let task of historyTasks">
-        <ion-card-header>
+    <ion-card *ngFor="let task of tasks">
+        <ion-card-header *ngIf="task.end_time">
             <ion-card-subtitle class="subheader-log">{{task.id}}</ion-card-subtitle>
             <ion-card-content class="header-log">
                 <ion-label>Duration: </ion-label>
-                {{this.moment.duration(moment(task.end_time, 'YYYY/MM/DD HH:mm').diff(moment(task.start_time, 'YYYY/MM/DD HH:mm'))).asMinutes() }} min
+                {{moment.duration(moment(task.end_time, 'YYYY/MM/DD HH:mm').diff(moment(task.start_time, 'YYYY/MM/DD HH:mm'))).asMinutes() }} min
                 <br/>
                 <br/>
                 <ion-label>Date: </ion-label>
-                {{this.moment(task.start_time).format('LL')}}
+                {{moment(task.start_time).format('LL')}}
                 <br/>
                 <ion-label>Start: </ion-label>
-                {{this.moment(task.start_time).format('LTS')}}
+                {{moment(task.start_time).format('LTS')}}
                 <br/>
                 <ion-label>End: </ion-label>
-                {{this.moment(task.end_time).format('LTS')}}
+                {{moment(task.end_time).format('LTS')}}
             </ion-card-content>
         </ion-card-header>
     </ion-card>
