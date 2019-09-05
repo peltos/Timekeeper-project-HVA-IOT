@@ -3,75 +3,20 @@
         <time>00:00:00</time>
         <div class="hero-button">
             <ion-button color="warning">Pause</ion-button>
-            <ion-button color="success">Start/Stop</ion-button>
+            <ion-button (click)="startOrStop()"
+                        [color]="isStarted? 'danger' : 'success'">
+                {{isStarted ? 'Stop' : 'Start'}}</ion-button>
         </div>
     </div>
-    <ion-card>
+    <ion-card *ngFor="let task of tasks">
         <ion-card-header>
-            <ion-card-subtitle class="subheader-log">Chip ID</ion-card-subtitle>
-            <!-- TODO: add color from the database -->
+            <ion-card-subtitle class="subheader-log">{{task.id}}</ion-card-subtitle>
             <ion-card-title class="header-log">
                 <ion-label>Start</ion-label>
-                00:00
+                {{task.start_time}}
                 -
                 <ion-label>End</ion-label>
-                00:00
-            </ion-card-title>
-        </ion-card-header>
-    </ion-card>
-
-    <ion-card>
-        <ion-card-header>
-            <ion-card-subtitle class="subheader-log">Chip ID</ion-card-subtitle>
-            <!-- TODO: add color from the database -->
-            <ion-card-title class="header-log">
-                <ion-label>Start</ion-label>
-                00:00
-                -
-                <ion-label>End</ion-label>
-                00:00
-            </ion-card-title>
-        </ion-card-header>
-    </ion-card>
-
-    <ion-card>
-        <ion-card-header>
-            <ion-card-subtitle class="subheader-log">Chip ID</ion-card-subtitle>
-            <!-- TODO: add color from the database -->
-            <ion-card-title class="header-log">
-                <ion-label>Start</ion-label>
-                00:00
-                -
-                <ion-label>End</ion-label>
-                00:00
-            </ion-card-title>
-        </ion-card-header>
-    </ion-card>
-
-    <ion-card>
-        <ion-card-header>
-            <ion-card-subtitle class="subheader-log">Chip ID</ion-card-subtitle>
-            <!-- TODO: add color from the database -->
-            <ion-card-title class="header-log">
-                <ion-label>Start</ion-label>
-                00:00
-                -
-                <ion-label>End</ion-label>
-                00:00
-            </ion-card-title>
-        </ion-card-header>
-    </ion-card>
-
-    <ion-card>
-        <ion-card-header>
-            <ion-card-subtitle class="subheader-log">Chip ID</ion-card-subtitle>
-            <!-- TODO: add color from the database -->
-            <ion-card-title class="header-log">
-                <ion-label>Start</ion-label>
-                00:00
-                -
-                <ion-label>End</ion-label>
-                00:00
+                {{task.end_time}}
             </ion-card-title>
         </ion-card-header>
     </ion-card>

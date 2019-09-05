@@ -1,12 +1,10 @@
 <ion-content>
   <ion-card>
     <ion-card-content>
-      <form>
         <ion-label>Chip ID</ion-label>
         <br/>
-        <ion-input type="text"></ion-input>
-        <ion-button color="primary">Login</ion-button>
-      </form>
+        <ion-input [(ngModel)]="buttonId" type="text"></ion-input>
+        <ion-button (click)="login()" color="primary">Login</ion-button>
     </ion-card-content>
   </ion-card>
 </ion-content>

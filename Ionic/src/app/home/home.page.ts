@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../services/api.service';
+import { Task } from '../models/task';
+import { HttpParams } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +11,42 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomePage implements OnInit {
 
-  constructor() { }
+  public isStarted = false;
+  public tasks: Task[] = [];
+  protected buttonId: string;
 
-  ngOnInit() {
+  constructor(
+      protected apiService: ApiService,
+      protected activatedRoute: ActivatedRoute
+  ) {
   }
 
+  ngOnInit() {
+    this.getTasks();
+  }
+
+  public startOrStop() {
+    console.log(this.isStarted);
+    this.isStarted ? this.stop() : this.start();
+    this.isStarted = !this.isStarted;
+  }
+
+  public start() {
+    console.log('start');
+  }
+
+  public stop() {
+    console.log('stop');
+  }
+
+  public async getTasks() {
+    this.buttonId = await this.activatedRoute.snapshot.paramMap.get('buttonId');
+
+    let params = new HttpParams();
+    params = params.append('id', this.buttonId);
+
+    await this.apiService.get('tasks', {params}).then((tasks: Task[]) => {
+      this.tasks = tasks;
+    });
+  }
 }
