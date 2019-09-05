@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { Task } from '../models/task';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { MomentService } from '../providers/moment.service.provider';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +18,8 @@ export class HomePage implements OnInit {
 
   constructor(
       protected apiService: ApiService,
-      protected activatedRoute: ActivatedRoute
+      protected activatedRoute: ActivatedRoute,
+      @Inject(MomentService) public moment,
   ) {
   }
 

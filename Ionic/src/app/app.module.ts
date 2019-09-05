@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { ApiService } from './services/api.service';
 import { ToastService } from './services/toast.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { momentServiceProvider } from './providers/moment.service.provider';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,6 +23,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     HttpClient,
     ApiService,
     ToastService,
+    momentServiceProvider,
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
   ],
   bootstrap: [AppComponent]
