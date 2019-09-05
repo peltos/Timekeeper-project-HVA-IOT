@@ -1,5 +1,5 @@
 <ion-content>
-    <div class="hero">
+    <div id="hero" class="hero standby">
         <time>{{time}}</time>
         <div class="hero-button">
             <ion-button color="warning">Pause</ion-button>
@@ -11,7 +11,11 @@
     <ion-card *ngFor="let task of historyTasks">
         <ion-card-header>
             <ion-card-subtitle class="subheader-log">{{task.id}}</ion-card-subtitle>
-            <ion-card-title class="header-log">
+            <ion-card-content class="header-log">
+                <ion-label>Duration: </ion-label>
+                {{this.moment.duration(moment(task.end_time, 'YYYY/MM/DD HH:mm').diff(moment(task.start_time, 'YYYY/MM/DD HH:mm'))).asMinutes() }} min
+                <br/>
+                <br/>
                 <ion-label>Date: </ion-label>
                 {{this.moment(task.start_time).format('LL')}}
                 <br/>
@@ -20,7 +24,7 @@
                 <br/>
                 <ion-label>End: </ion-label>
                 {{this.moment(task.end_time).format('LTS')}}
-            </ion-card-title>
+            </ion-card-content>
         </ion-card-header>
     </ion-card>
 </ion-content>

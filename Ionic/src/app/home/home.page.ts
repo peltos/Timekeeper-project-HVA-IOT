@@ -60,6 +60,8 @@ export class HomePage implements OnInit {
   }
 
   protected start() {
+    document.getElementById('hero').className = 'hero active';
+    this.time = this.moment().hour(0).minute(0).second(0).format('LTS');
     this.stopWatchInterval = setInterval(() => {
       this.isRunning = true;
       this.time = this.moment(this.time, 'LTS').add(1, 'seconds').format('LTS');
@@ -67,6 +69,7 @@ export class HomePage implements OnInit {
   }
 
   protected stop() {
+    document.getElementById('hero').className = 'hero standby';
     clearInterval(this.stopWatchInterval);
     this.isRunning = false;
     // TODO: Eindtijd opsturen naar API

@@ -19,6 +19,25 @@ ion-content {
     color: var(--ion-color-primary-contrast);
   }
 
+  &.active {
+    background: var(--ion-color-success);
+  }
+
+  &.standby {
+    background: var(--ion-color-primary);
+    time {
+      text-decoration: underline;
+    }
+  }
+
+  &.error {
+    background: var(--ion-color-danger);
+  }
+
+  &.pause {
+    background: var(--ion-color-warning);
+  }
+
   .hero-button {
     position: absolute;
     bottom: 10px;

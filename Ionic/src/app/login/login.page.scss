@@ -6,7 +6,9 @@ ion-card-content {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   background: #fff;
+  text-align: center;
 
   ion-input {
     border: 1px solid var(--ion-color-medium);
