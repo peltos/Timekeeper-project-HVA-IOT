@@ -168,11 +168,11 @@ void oscillate(float springConstant, float dampConstant, int color)
 }
 
 void sendHttp(String tapState){
-  //HTTPClient http;
+  HTTPClient http;
   Serial.println(serverURL + "add_task.php?id=" + chipID + "&hash=" + hash + "&tap=" + tapState);
-  //http.begin(serverURL + "add_task.php?id=" + chipID + "&hash=" + hash + "&tap=" + tapState);
-  //uint16_t httpCode = http.GET();
-  //http.end();
+  http.begin(serverURL + "add_task.php?id=" + chipID + "&hash=" + hash + "&tap=" + tapState);
+  uint16_t httpCode = http.GET();
+  http.end();
   }
 
 void sendButtonPress()
