@@ -1,4 +1,3 @@
-  
 #include <Servo.h>
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
@@ -182,15 +181,18 @@ void sendButtonPress()
      hash = time(NULL);
   }
   if (tap == "start") {
-    setAllPixels(0,0,139, 1.0);
+    setAllPixels(0,0,205, 1.0);
+    strip.setBrightness(3000);
     tap = "end";
     Serial.println("Done");
   } else if (tap == "pause") {
-     setAllPixels(210, 0, 0, 1.0);
+     setAllPixels(34,139,34, 1.0);
+     strip.setBrightness(3000);
     tap = "endPause";
     Serial.println("Active");
   } else {
-    setAllPixels(210, 0, 0, 1.0);
+    setAllPixels(34,139,34, 1.0);
+    strip.setBrightness(3000);
     tap = "start";
     Serial.println("Active");
     }
@@ -202,7 +204,8 @@ void sendButtonPress()
 void sendLongPress(){
   if (tap == "start"){
     tap = "pause";
-    setAllPixels(210, 90, 0, 1.0);
+    setAllPixels(255,255,0, 1.0);
+    strip.setBrightness(3000);
     Serial.println("Pause");
     sendHttp(tap);
     }
