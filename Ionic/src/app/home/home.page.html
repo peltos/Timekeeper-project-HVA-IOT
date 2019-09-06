@@ -1,12 +1,6 @@
 <ion-content>
     <div id="hero" class="hero standby">
         <time>{{time}}</time>
-        <div class="hero-button">
-            <ion-button color="warning">Pause</ion-button>
-            <ion-button (click)="changeState()"
-                        [color]="isStarted? 'danger' : 'success'">
-                {{isStarted ? 'Stop' : 'Start'}}</ion-button>
-        </div>
     </div>
     <ion-card *ngFor="let task of tasks">
         <ion-card-header *ngIf="task.end_time">

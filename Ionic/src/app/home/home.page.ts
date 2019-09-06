@@ -12,16 +12,11 @@ import { MomentService } from '../providers/moment.service.provider';
 })
 export class HomePage implements OnInit {
 
-  public isStarted = false;
-  public isRunning = false;
+  public isTiming = false;
   public tasks: Task[] = [];
   public time: string;
   protected stopWatchInterval;
   protected buttonId: string;
-
-  protected static makeHash() {
-    return Math.random().toString(36).substr(2, 5);
-  }
 
   constructor(
       protected apiService: ApiService,
@@ -39,18 +34,6 @@ export class HomePage implements OnInit {
     }, 1000);
   }
 
-  public changeState() {
-    this.isStarted = !this.isStarted;
-
-    if (this.isStarted && !this.isRunning) {
-      this.start();
-    }
-
-    if (!this.isStarted && this.isRunning) {
-      this.stop();
-    }
-  }
-
   protected async getTasks() {
     this.buttonId = await this.activatedRoute.snapshot.paramMap.get('buttonId');
 
@@ -63,12 +46,19 @@ export class HomePage implements OnInit {
   }
 
   protected setTime() {
-    if (this.tasks[0].end_time && !this.isRunning) {
+    if (this.tasks[0].end_time && this.isTiming) {
       this.time = this.moment().hour(0).minute(0).second(0).format('LTS');
+      this.stopTimer();
     }
 
-    if (!this.tasks[0].end_time && !this.isRunning) {
+    if (this.tasks[0].end_time && !this.isTiming) {
+      this.time = this.moment().hour(0).minute(0).second(0).format('LTS');
+      this.stopTimer();
+    }
+
+    if (!this.tasks[0].end_time && !this.isTiming) {
       this.time = this.calculateTime();
+      this.startTimer();
     }
   }
 
@@ -78,52 +68,17 @@ export class HomePage implements OnInit {
     return this.moment.duration(currentDateTime.diff(startDateTime)).asHours().toFixed(1);
   }
 
-
-  protected start() {
-    if (this.tasks[0].end_time) {
-      this.startTaskOnServer();
-    }
-
-    this.startTimer();
-    document.getElementById('hero').className = 'hero active';
-  }
-
-  protected stop() {
-    if (!this.tasks[0].end_time) {
-      this.stopTaskOnServer();
-    }
-
-    this.stopTimer();
-    document.getElementById('hero').className = 'hero standby';
-  }
-
-  protected startTaskOnServer() {
-    let params = new HttpParams();
-    params = params.append('id', this.buttonId);
-    params = params.append('hash', HomePage.makeHash());
-    params = params.append('tap', 'start');
-
-    this.apiService.get('add-task', {params});
-  }
-
-  protected stopTaskOnServer() {
-    let params = new HttpParams();
-    params = params.append('id', this.buttonId);
-    params = params.append('hash', this.tasks[0].hash);
-    params = params.append('tap', 'end');
-
-    this.apiService.get('add-task', {params});
-  }
-
   protected startTimer() {
+    this.isTiming = true;
+    document.getElementById('hero').className = 'hero active';
     this.stopWatchInterval = setInterval(() => {
-      this.isRunning = true;
       this.time = this.moment(this.time, 'LTS').add(1, 'seconds').format('LTS');
     }, 1000);
   }
 
   protected stopTimer() {
-    this.isRunning = false;
+    this.isTiming = false;
     clearInterval(this.stopWatchInterval);
+    document.getElementById('hero').className = 'hero standby';
   }
 }
