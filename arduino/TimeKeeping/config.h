@@ -5,7 +5,7 @@
 #define PROJECT_SHORT_NAME "IOT"
 
 // Change server name
-#define SERVER_URL "http://157.245.70.238"
+#define SERVER_URL "http://157.245.70.238/"
 
 // Change default SSID
 #define CONFIG_SSID "IOT"

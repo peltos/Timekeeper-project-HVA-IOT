@@ -7,7 +7,11 @@
             <ion-card-subtitle class="subheader-log">{{task.id}}</ion-card-subtitle>
             <ion-card-content class="header-log">
                 <ion-label>Duration: </ion-label>
-                {{moment.duration(moment(task.end_time, 'YYYY/MM/DD HH:mm').diff(moment(task.start_time, 'YYYY/MM/DD HH:mm'))).asMinutes() }} min
+                {{("0" + moment.duration(moment(task.end_time, 'YYYY/MM/DD HH').diff(moment(task.start_time, 'YYYY/MM/DD HH'))).asHours()).slice(-2)}}  <!-- Hours -->
+                :
+                {{("0" + moment.duration(moment(task.end_time, 'YYYY/MM/DD HH:mm').diff(moment(task.start_time, 'YYYY/MM/DD HH:mm'))).asMinutes()).slice(-2)}}  <!-- Minutes -->
+                :
+                {{("0" + ((moment.duration(moment(task.end_time, 'YYYY/MM/DD HH:mm:ss').diff(moment(task.start_time, 'YYYY/MM/DD HH:mm:ss'))).asSeconds()) % 60)).slice(-2) }}  <!-- Seconds -->
                 <br/>
                 <br/>
                 <ion-label>Date: </ion-label>
